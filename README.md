@@ -59,7 +59,7 @@ Daha sonra **Google Gemini** modeli, bu bağlama dayanarak Türkçe yanıt üret
 
 ### 2️⃣ Bağımlılıkların Kurulumu  
 
-Proje dizininde:
+Proje dizininde aşağıdaki komutu çalıştırın:  
 ```bash
 pip install -r requirements.txt
 3️⃣ Ortam Değişkenlerini Ayarlama
@@ -83,18 +83,64 @@ Uygulama, veri setini yükleyip embedding işlemini tamamladıktan sonra tarayı
 
 🚀 Nasıl Kullanılır?
 Arayüz açıldığında “✅ Vektör veritabanı başarıyla oluşturuldu!” mesajını bekleyin.
-
 Sohbet kutusuna veri setiyle ilgili Türkçe sorularınızı yazın.
 
-🔸 Örnek Sorular:
-Kategori	Örnek Soru
-Problem Analizi	“Problem Statement'ında ‘type error’ geçen bir örnekte hangi kodlama ipucu verilmiştir?”
-Kod Düzeltme	“Django reposundaki tarih formatlama hatasını düzelten patch’te hangi değişiklikler yapılmış?”
-Test Kodu Sorgulama	“Bir test_patch içeriğinde ‘assert len(’ kontrolü geçen örnek var mı?”
-Genel Kavram	“Bir döngüde liste elemanlarını değiştirirken IndexError almamak için ne yapılmalı?”
+💬 Örnek Sorular
+SWE-RAG Kod Asistanı'na aşağıdaki türde sorular yöneltebilirsiniz:
+Model, SWE-ReBench veri setinde uygun belge bulamazsa Google Gemini modelinin genel bilgisini kullanarak yanıt üretir.
 
-🔍 Debugging (Hata Ayıklama)
-Arayüzdeki “🔍 İlk 3 kaynağı göster (debug)” seçeneğini işaretleyerek, modelin yanıt oluştururken kullandığı problem açıklamalarını, yamaları ve test kodlarını görüntüleyebilirsiniz.
+🔹 Kodlama ve Hatalar Hakkında
+Bu hatayı nasıl düzeltebilirim?
+
+TypeError ne demektir?
+
+Python’da liste elemanlarını değiştirirken neden IndexError alınır?
+
+Bir fonksiyonda recursion yerine iteration kullanmak neden daha verimli olabilir?
+
+🔹 Patch (Yama) ve Düzeltmeler
+Django projesindeki tarih hatasını düzelten patch ne yapıyor?
+
+Bu patch’te hangi değişiklikler yapılmış?
+
+Performans iyileştirmesi yapan bir patch örneği var mı?
+
+🔹 Test Kodları
+Test patch içinde assert kullanılan bir örnek var mı?
+
+Başarısız testler nasıl düzeltilmiş?
+
+🔹 Genel Programlama Soruları
+Two pointers tekniği nedir?
+
+List comprehension ne işe yarar?
+
+try-except yapısı hangi hataları yakalar?
+
+💡 İpucu:
+Sohbet kutusuna Türkçe yazabilirsiniz.
+Model bağlam bulamadığında genel programlama bilgisini kullanır.
+Bağlam bulduğunda ise yanıt sonunda “Kaynaklar:” bölümü görünür.
+
+🧪 Test Planı
+Aşağıdaki tablo, SWE-RAG Kod Asistanı'nın farklı türdeki sorulara nasıl yanıt verdiğini gösterir.
+Bu tabloyu, uygulamayı test ederken sırasıyla kullanabilirsiniz.
+
+No	Soru	Beklenen Kaynak	Açıklama / Beklenen Davranış
+1	Django projesindeki tarih hatasını düzelten patch ne yapıyor?	SWE-ReBench (patch)	Veri setinden gerçek patch içeriği getirir.
+2	Test patch içinde assert kullanılan bir örnek var mı?	SWE-ReBench (test_patch)	“assert” içeren test belgelerini bulur.
+3	Python’da liste elemanlarını değiştirirken neden IndexError alınır?	Karma (veri + model)	Veri varsa onu kullanır, yoksa genel bilgiyle açıklar.
+4	Two pointers tekniği nedir?	Model (Gemini)	Genel programlama açıklaması yapar.
+5	Bu cevabı oluştururken hangi kaynak belgeler kullanıldı?	RAG (retriever)	“Kaynaklar:” kısmında meta verileri gösterir.
+
+💡 Test İpuçları
+✅ İyi sonuç: Yanıt sonunda “Kaynaklar:” kısmı görünüyorsa RAG pipeline doğru çalışıyor.
+
+🧠 Genel bilgi yanıtı: Kaynak kısmı yoksa model kendi bilgisinden açıklama üretmiştir.
+
+🔍 Debug seçeneği: “🔍 İlk 3 kaynağı göster (debug)” kutucuğunu işaretleyerek kullanılan belgeleri görebilirsiniz.
+
+💬 Türkçe yanıt: Prompt sistemi Türkçe olarak ayarlandığından yanıtlar otomatik Türkçedir.
 
 🤝 Katkı Notu
 Bu proje kişisel bir çalışmadır.
