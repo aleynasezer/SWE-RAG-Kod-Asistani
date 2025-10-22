@@ -1,1 +1,7 @@
+# Python sanal ortamı
+genai-env/
+venv/
 .env
+__pycache__/
+*.pyc
+*.pyo
